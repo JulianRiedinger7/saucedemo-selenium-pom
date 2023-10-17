@@ -8,8 +8,8 @@ import utils.BasePage;
 import java.util.List;
 
 public class ProductsPage extends BasePage {
-    @FindBy(className = "inventory-item")
-    private List<WebElement> productsList;
+    @FindBy(className = "title")
+    private WebElement mainTitle;
 
     @FindBy(css = ".pricebar button")
     private List<WebElement> addToCartBtnList;
@@ -17,18 +17,39 @@ public class ProductsPage extends BasePage {
     @FindBy(className = "shopping_cart_link")
     private WebElement cartIcon;
 
+    @FindBy(id = "react-burger-menu-btn")
+    private WebElement hamburgerBtn;
+
+    @FindBy(id = "logout_sidebar_link")
+    private WebElement logoutBtn;
+
     public ProductsPage(WebDriver driver) {
         super(driver);
     }
 
-    public int getProductsListSize() {
-        super.waitElementsVisibility(productsList);
-        return productsList.size();
+    public boolean isTitleCorrect(String title) {
+        waitElementVisibility(mainTitle);
+        return mainTitle.isDisplayed() && mainTitle.getText().equalsIgnoreCase(title);
     }
 
-    public CartPage addAProduct(int index) {
-        super.waitElementsVisibility(productsList);
+    public void addProduct(int index) {
+        try {
+            WebElement addBtn = addToCartBtnList.get(index);
+            super.waitToBeClickable(addBtn);
+            addBtn.click();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Product does not exist " + e.getMessage());
+        }
+    }
 
+    public CartPage goToCart() {
+        super.waitToBeClickable(cartIcon);
+        cartIcon.click();
+
+        return new CartPage(driver);
+    }
+
+    public CartPage addAProductAndGoToCart(int index) {
         try {
             WebElement addBtn = addToCartBtnList.get(index);
             super.waitToBeClickable(addBtn);
@@ -37,9 +58,20 @@ public class ProductsPage extends BasePage {
             super.waitToBeClickable(cartIcon);
             cartIcon.click();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Product does not exist" + e.getMessage());
+            System.out.println("Product does not exist " + e.getMessage());
         }
 
         return new CartPage(driver);
+    }
+
+    public LoginPage logout() {
+        super.waitToBeClickable(hamburgerBtn);
+        hamburgerBtn.click();
+
+        super.waitToBeClickable(logoutBtn);
+        logoutBtn.click();
+
+
+        return new LoginPage(driver);
     }
 }

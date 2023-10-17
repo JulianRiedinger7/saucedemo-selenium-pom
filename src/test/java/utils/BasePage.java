@@ -38,10 +38,4 @@ public class BasePage {
     public void waitElementsVisibility(List<WebElement> elements) {
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
-
-    public boolean isTitleCorrect(String title, WebElement element) {
-        waitElementVisibility(element);
-
-        return element.isDisplayed() && element.getText().equalsIgnoreCase(title);
-    }
 }

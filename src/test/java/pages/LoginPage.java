@@ -19,9 +19,20 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    public boolean areInputsVisible() {
+        super.waitElementVisibility(usernameInput);
+        super.waitElementVisibility(passwordInput);
+
+        return usernameInput.isDisplayed() && passwordInput.isDisplayed();
+    }
+
     public ProductsPage login(String username, String password) {
+        waitElementVisibility(usernameInput);
         usernameInput.sendKeys(username);
+
+        waitElementVisibility(passwordInput);
         passwordInput.sendKeys(password);
+
         loginBtn.click();
         return new ProductsPage(driver);
     }

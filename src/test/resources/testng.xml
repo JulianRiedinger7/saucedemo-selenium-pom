@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Web Automation Suite">
+    <parameter name="url" value="https://www.saucedemo.com/" />
+    <parameter name="username" value="standard_user" />
+    <parameter name="password" value="secret_sauce" />
+    <parameter name="firstName" value="Julian" />
+    <parameter name="lastName" value="Perez" />
+    <parameter name="postalCode" value="5000" />
+    <test name="Sauce Demo Tests">
+        <classes>
+            <class name="tests.SauceDemoTests" />
+        </classes>
+    </test>
+</suite>

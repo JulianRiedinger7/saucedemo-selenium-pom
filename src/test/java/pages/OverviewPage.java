@@ -22,6 +22,12 @@ public class OverviewPage extends BasePage {
         super(driver);
     }
 
+
+    public boolean isTitleCorrect(String title) {
+        waitElementVisibility(mainTitle);
+        return mainTitle.isDisplayed() && mainTitle.getText().equalsIgnoreCase(title);
+    }
+
     public int getOverviewItemsListSize() {
         super.waitElementsVisibility(overviewItemsList);
         return overviewItemsList.size();
